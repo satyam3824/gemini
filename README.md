@@ -16,10 +16,20 @@
    git clone https://github.com/satyam3824/gemini.git
 ## Step 3:create virtual environment
    1.python -m venv my_virtual
-   2.Set-SxecutionPolicy -Scope Process -ExcecutionPoilicy Bypass >>
-   3..\virtual_env\Scripts\activate 
+
+   2..\virtual_env\Scripts\activate 
 
 ## step 4: Create app.py file
-1. Prompt : "Generate a code for streamlit app named english grammar check
+1. Prompt : "Generate a code for streamlit app named english grammar check" - i need a code for entering input text and submit button"
 2. Enter prompt into Gemini Ai
 
+## Step 5: secrets.toml file for confidential information
+1. Create a folder '.streamlit'.
+2. Inside the folder create a file 'secrets.toml'
+3. Exclude the file in '.gitignore' to avoid being seen in github.
+
+## Step 6: Authentication Code
+1. https://github.com/utkarshminds/project_4_vacation_planner_openai/blob/main/main.py
+
+## Step 7: Create requirements.txt file
+1. pipreqs --ignore virtual_env/

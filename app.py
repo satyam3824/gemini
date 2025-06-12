@@ -42,13 +42,13 @@ def check_password():
 
 if not check_password():
     st.stop()
-
-    import google.generativeai as genai #LIBRARY OF GEN AI
+from google import genai
+    
 
 #REF: https://ai.google.dev/gemini-api/docs/text-generation?authuser=3&lang=python
-genai.configure(api_key=st.secrets["api_key"]["api_key"]) #API KEY
+client = genai.client(api_key=st.secrets["api_key"]["api_key"]) #API KEY
 
-model = genai.GenerativeModel("gemini-2.0-flash") #MODEL NAME AND VERSION
+#model = genai.GenerativeModel("gemini-2.0-flash") #MODEL NAME AND VERSION
 
 
 
@@ -61,7 +61,11 @@ def grammar_check(text):
     if not text.strip():
         return "Please enter text."
     
-    response = model.generate_content(f"generate a grammatically sound english sentence from the given information{text}") #PROMPT INPUT
+    response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=[f"generate a grammatically sound English sentence from the given information : {text}."] 
+
+        
     '''
     PROMPT : Input to generate model response
     '''

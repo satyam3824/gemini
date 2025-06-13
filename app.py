@@ -1,8 +1,6 @@
 
-import streamlit as st
-import google.generativeai as genai
 
-import os
+import streamlit as st
 import hmac
 
 def check_password():
@@ -42,60 +40,51 @@ def check_password():
 
 if not check_password():
     st.stop()
+
 from google import genai
-    
 
-#REF: https://ai.google.dev/gemini-api/docs/text-generation?authuser=3&lang=python
-client = genai.client(api_key=st.secrets["api_key"]["api_key"]) #API KEY
+client = genai.Client(api_key= st.secrets["api_key"]["api_key"]) #API KEY
 
-#model = genai.GenerativeModel("gemini-2.0-flash") #MODEL NAME AND VERSION
+st.header("Story Telling Experience")
+# main application starts
+def story_telling(text):
 
-
-
-
-#main application starts
-def grammar_check(text):
     """
-    A placeholder function for grammar checking.
+    A placeholder function for story telling.
     """
     if not text.strip():
         return "Please enter text."
     
     response = client.models.generate_content(
     model="gemini-2.0-flash",
-    contents=[f"generate a grammatically sound English sentence from the given information : {text}."] 
+    contents=[f"Generate a creative story based on the given input from the user : {text}."]
+)
 
-        
-    '''
-    PROMPT : Input to generate model response
-    '''
-   # print(response.text) #OUTPUT OF THE MODEL
-
-
-    # This is where your actual grammar checking logic would go.
-    # For now, it just shows a placeholder result.
-    checked_text = f"Original: {text}\n\nResult: {response.text}"
+    # This is where your actual logic would go.
+    
+    checked_text = f"{response.text}"
     
     return checked_text
 
-st.set_page_config(page_title="Grammar Check", layout="centered")
 
-st.title("Grammar Checker")
+st.title("Story Topic")
 st.write("Type your text below and click 'Check' to get suggestions.")
+
 
 user_input = st.text_area(
     "Your Text:",
     height=200,
     placeholder="Enter text here..."
+
 )
 
 if st.button("Check"):
     if user_input:
-        result = grammar_check(user_input)
+        result = story_telling(user_input)
         st.subheader("Result:")
         st.markdown(result)
     else:
         st.warning("Please enter some text.")
 
 st.markdown("---")
-st.caption("Simple Grammar Checker")
+st.caption("Story Telling")

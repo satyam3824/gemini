@@ -1,5 +1,6 @@
 
 
+
 import streamlit as st
 import hmac
 
@@ -43,32 +44,43 @@ if not check_password():
 
 from google import genai
 
+#REF: https://ai.google.dev/gemini-api/docs/text-generation?authuser=3&lang=python
 client = genai.Client(api_key= st.secrets["api_key"]["api_key"]) #API KEY
 
-st.header("Story Telling Experience")
+# model = genai.GenerativeModel("gemini-2.0-flash")
+
+
 # main application starts
-def story_telling(text):
+def grammar_check(text):
 
     """
-    A placeholder function for story telling.
+    A placeholder function for grammar checking.
     """
     if not text.strip():
         return "Please enter text."
     
     response = client.models.generate_content(
     model="gemini-2.0-flash",
-    contents=[f"Generate a creative story based on the given input from the user : {text}."]
+    contents=[f"Generate a grammatically sound English sentence from the given information : {text}."]
 )
-
-    # This is where your actual logic would go.
     
-    checked_text = f"{response.text}"
+    '''
+    PROMPT : Input to generate model response
+    '''
+    #print(response.text) #OUTPUT OF THE MODEL
+
+
+    # This is where your actual grammar checking logic would go.
+    # For now, it just shows a placeholder result.
+    checked_text = f"Original: {text}\n\nResult: {response.text}"
     
     return checked_text
 
+st.set_page_config(page_title="Grammar Check", layout="centered")
 
-st.title("Story Topic")
+st.title("Grammar Checker")
 st.write("Type your text below and click 'Check' to get suggestions.")
+
 
 
 user_input = st.text_area(
@@ -80,11 +92,11 @@ user_input = st.text_area(
 
 if st.button("Check"):
     if user_input:
-        result = story_telling(user_input)
+        result = grammar_check(user_input)
         st.subheader("Result:")
         st.markdown(result)
     else:
         st.warning("Please enter some text.")
 
 st.markdown("---")
-st.caption("Story Telling")
+st.caption("Simple Grammar Checker")
